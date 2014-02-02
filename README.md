@@ -1,4 +1,4 @@
 dotfiles
 ========
 
-my inux dotfiles
+my Linux dotfiles
