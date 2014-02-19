@@ -1,8 +1,9 @@
 # bash_aliases file
 
-alias ls='ls --color-auto'
+alias ls='ls --color=auto'
 alias ll='ls -al'
 alias l.='ls -d .*'
+alias lh='ls -al --color=yes -lasth | less -R'
 
 alias ..='cd ..'
 alias .2='cd ../../'
