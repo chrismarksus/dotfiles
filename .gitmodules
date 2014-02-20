@@ -22,3 +22,6 @@
 [submodule "vim/bundle/tlib-vim"]
 	path = vim/bundle/tlib-vim
 	url = https://github.com/tomtom/tlib_vim.git
+[submodule "vim/bundle/vim-cucumber"]
+	path = vim/bundle/vim-cucumber
+	url = https://github.com/tpope/vim-cucumber.git
