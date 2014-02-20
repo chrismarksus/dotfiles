@@ -1,4 +1,12 @@
-dotfiles
-========
+dotfiles.cmarks
+======
 
-my Linux dotfiles
+dotfiles
+=====
+
+install
+=====
+
+todos
+=====
+
