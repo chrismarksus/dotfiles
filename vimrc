@@ -40,6 +40,7 @@ set foldlevel=1
 set suffixesadd+=.js
 set suffixesadd+=.jsf
 set suffixesadd+=.jsp
+set suffixesadd+=.jsf
 set suffixesadd+=.java
 set suffixesadd+=.class
 set suffixesadd+=.rb
@@ -48,6 +49,8 @@ set suffixesadd+=.feature
 set suffixesadd+=.property
 set suffixesadd+=.php
 set suffixesadd+=.groovy
+set suffixesadd+=.html
+set suffixesadd+=.css
 
 autocmd Filetype ruby setlocal shiftwidth=2 tabstop=2 softtabstop=2
 
