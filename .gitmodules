@@ -25,3 +25,6 @@
 [submodule "vim/bundle/vim-cucumber"]
 	path = vim/bundle/vim-cucumber
 	url = https://github.com/tpope/vim-cucumber.git
+[submodule "vim/bundle/vim-syntastic"]
+	path = vim/bundle/vim-syntastic
+	url = https://github.com/scrooloose/syntastic.git

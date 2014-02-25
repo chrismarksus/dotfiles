@@ -19,4 +19,5 @@ the pathogen plugin.
 [fugitive](https://github.com/tpope/vim-fugitive),
 [cucumber](https://github.com/tpope/vim-cucumber), and
 [solarized](https://github.com/altercation/vim-colors-solarized)
+[syntastic](https://github.com/scrooloose/syntastic)
 
