@@ -17,4 +17,4 @@ alias egrep='egrep --color=auto'
 alias fgrep='fgrep --color=auto'
 
 alias edit='vim'
-alias vimenc "vim -u ~/encrypted_vim_rc -x"
+#alias vimenc "vim -u ~/encrypted_vim_rc -x"
