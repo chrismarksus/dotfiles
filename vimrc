@@ -51,19 +51,20 @@ set foldlevel=1
 set suffixesadd+=.js
 set suffixesadd+=.jsf
 set suffixesadd+=.jsp
-set suffixesadd+=.jsf
 set suffixesadd+=.java
 set suffixesadd+=.class
 set suffixesadd+=.rb
 set suffixesadd+=.soy
 set suffixesadd+=.feature
-set suffixesadd+=.property
 set suffixesadd+=.php
 set suffixesadd+=.groovy
 set suffixesadd+=.html
 set suffixesadd+=.css
+set suffixesadd+=.scss
+set suffixesadd+=.sass
 
 autocmd Filetype ruby setlocal shiftwidth=2 tabstop=2 softtabstop=2
+autocmd Filetype gitcommit,markdown,text,txt setlocal spell
 
 if filereadable(glob("~/.vimrc_local")) 
     source ~/.vimrc_local
