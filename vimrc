@@ -1,12 +1,40 @@
 runtime bundle/vim-pathogen/autoload/pathogen.vim
+"call pathogen#runtime_append_all_bundles()
 call pathogen#infect()
 call pathogen#helptags()
 
+set t_Co=256
+let g:solarized_termcolors=256
+
 filetype plugin indent on
-syntax on
 colorscheme solarized
+"colorscheme plix
+"colorscheme Spink
 set background=dark
 let g:solarized_termcolors=256
+
+if !exists('g:airline_symbols')
+  let g:airline_symbols = {}
+  let g:airline_theme='powerlineish'
+endif
+
+" unicode symbols
+let g:airline_left_sep = '»'
+let g:airline_left_sep = '▶'
+let g:airline_right_sep = '«'
+let g:airline_right_sep = '◀'
+let g:airline_symbols.linenr = '␊'
+let g:airline_symbols.linenr = '␤'
+let g:airline_symbols.linenr = '¶'
+let g:airline_symbols.branch = '⎇'
+let g:airline_symbols.paste = 'ρ'
+let g:airline_symbols.paste = 'Þ'
+let g:airline_symbols.paste = '∥'
+let g:airline_symbols.whitespace = 'Ξ'
+
+syntax on
+
+set laststatus=2
 
 set nocompatible
 set nobackup
@@ -66,6 +94,6 @@ set suffixesadd+=.sass
 autocmd Filetype ruby setlocal shiftwidth=2 tabstop=2 softtabstop=2
 autocmd Filetype gitcommit,markdown,text,txt setlocal spell
 
-if filereadable(glob("~/.vimrc_local")) 
+if filereadable(glob("~/.vimrc_local"))
     source ~/.vimrc_local
 endif
