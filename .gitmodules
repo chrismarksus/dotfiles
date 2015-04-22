@@ -37,3 +37,6 @@
 [submodule "vim/bundle/vim-spink"]
 	path = vim/bundle/vim-spink
 	url = https://github.com/EHartC/Spink.git
+[submodule "vim/bundle/vim-unimpaired"]
+	path = vim/bundle/vim-unimpaired
+	url = https://github.com/tpope/vim-unimpaired.git
