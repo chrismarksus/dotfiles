@@ -16,8 +16,8 @@ alias hig='history|grep '
 
 # Disk usage
 alias most='du -hsx * | sort -rh | head -10'
-alias du="du -h"  
-alias df="df -h" 
+alias du="du -h"
+alias df="df -h"
 
 # Ruby, rake, bundle, gem etc...
 alias bake='bundle exec rake'
@@ -29,3 +29,6 @@ alias fgrep='fgrep --color=auto'
 
 alias edit='vim'
 #alias vimenc "vim -u ~/encrypted_vim_rc -x"
+
+# fix the colors when using vim inside tmux
+alias tmux='tmux -2'

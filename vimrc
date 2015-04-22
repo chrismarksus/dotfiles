@@ -8,8 +8,6 @@ let g:solarized_termcolors=256
 
 filetype plugin indent on
 colorscheme solarized
-"colorscheme plix
-"colorscheme Spink
 set background=dark
 let g:solarized_termcolors=256
 
@@ -93,6 +91,8 @@ set suffixesadd+=.sass
 
 autocmd Filetype ruby setlocal shiftwidth=2 tabstop=2 softtabstop=2
 autocmd Filetype gitcommit,markdown,text,txt setlocal spell
+autocmd BufNewFile,BufRead *.json setfiletype json syntax=javascript
+autocmd BufRead,BufNewFile *.{md,mdown,mkd,mkdn,markdown,mdwn} set filetype=markdown
 
 if filereadable(glob("~/.vimrc_local"))
     source ~/.vimrc_local
