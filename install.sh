@@ -12,10 +12,8 @@ files="bashrc vimrc vim secure_vimrc tmux.conf"          # list of files/folders
 ##########
 
 # create dotfiles_old in homedir
-# TODO: needs an if/then to test if the directory exists
-echo "Creating $olddir for backup of any existing dotfiles in ~"
+
 mkdir -p $olddir
-echo "...done"
 
 # change to the dotfiles directory
 echo "Changing to the $dir directory"
@@ -24,9 +22,18 @@ echo "...done"
 
 # move any existing dotfiles in homedir to dotfiles_old directory, then create symlinks 
 for file in $files; do
-    # TODO: need to test if the file is a file and not a symbolic link
-    echo "Moving any existing dotfiles from ~ to $olddir"
-    mv ~/.$file ~/dotfiles_old/
+    if [[ -h ~/.$file ]]; then
+        echo "A symblic link for $file already exists, Deleteing link!"
+        rm ~/.$file
+    else
+        echo "Moving any existing dotfiles from ~ to $olddir"
+        mv ~/.$file ~/dotfiles_old/
+    fi
+
     echo "Creating symlink to $file in home directory."
     ln -s $dir/$file ~/.$file
 done
+
+git submodule update --init --recursive
+git config --global core.editor vi
+git config --global color.ui auto

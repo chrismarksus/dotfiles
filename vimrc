@@ -2,13 +2,19 @@ runtime bundle/vim-pathogen/autoload/pathogen.vim
 call pathogen#infect()
 call pathogen#helptags()
 
-
 filetype plugin indent on
 syntax on
-set background=dark
 colorscheme solarized
+set background=dark
+let g:solarized_termcolors=256
 
 set nocompatible
+set nobackup
+set nowritebackup
+set noswapfile
+set splitbelow
+set splitright
+set incsearch
 set confirm
 set backspace=indent,eol,start
 set autoread
@@ -28,6 +34,11 @@ set wildmenu
 set hlsearch
 set showmatch
 set copyindent
+set ttyfast
+set gdefault
+set binary
+set noeol
+set tags=./tags
 
 if has('folding')
     set nofoldenable
@@ -45,12 +56,16 @@ set suffixesadd+=.class
 set suffixesadd+=.rb
 set suffixesadd+=.soy
 set suffixesadd+=.feature
-set suffixesadd+=.property
 set suffixesadd+=.php
 set suffixesadd+=.groovy
+set suffixesadd+=.html
+set suffixesadd+=.css
+set suffixesadd+=.scss
+set suffixesadd+=.sass
 
 autocmd Filetype ruby setlocal shiftwidth=2 tabstop=2 softtabstop=2
+autocmd Filetype gitcommit,markdown,text,txt setlocal spell
 
 if filereadable(glob("~/.vimrc_local")) 
-    source ~/.vimrc.local
+    source ~/.vimrc_local
 endif
