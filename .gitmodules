@@ -46,3 +46,6 @@
 [submodule "vim/bundle/vim-trailing-whitespace"]
 	path = vim/bundle/vim-trailing-whitespace
 	url = https://github.com/bronson/vim-trailing-whitespace.git
+[submodule "vim/bundle/vim-phix-colors"]
+	path = vim/bundle/vim-phix-colors
+	url = https://github.com/stuartherbert/vim-phix-colors.git
