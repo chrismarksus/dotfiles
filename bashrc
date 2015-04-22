@@ -15,10 +15,17 @@ if [ -f ~/dotfiles/bash_functions ]; then
     . ~/dotfiles/bash_functions
 fi
 
-export PS1='\u@\h \[\033[1;33m\]\W\[\033[0m\]$(parse_git_branch)$ '
+PS1="\[$COLOR_WHITE\]\n[\W]"          # basename of pwd
+PS1+="\[\$(git_color)\]"        # colors git status
+PS1+="\$(git_branch)"           # prints current branch
+PS1+="\[$COLOR_BLUE\]\[$COLOR_RESET\]\$ "   # '#' for root, else '$'
+export PS1
 
 # Local must stay at the bottom so it can override the above configure
 # Source local definitions
 if [ -f ~/.bashrc_local ]; then
     . ~/.bashrc_local
 fi
+
+export NVM_DIR="/home/cmarks/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
