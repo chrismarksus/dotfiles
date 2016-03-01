@@ -23,9 +23,14 @@ alias df="df -h"
 alias bake='bundle exec rake'
 
 #Colorize the grep output
-alias grep='grep --color=auto'
-alias egrep='egrep --color=auto'
-alias fgrep='fgrep --color=auto'
+#Git Bash on windows doesn't have color options
+grepopt="--color=auto"
+(echo | grep $grepopt . 2>/dev/null)
+if [ $? -lt 2]; then
+	alias grep='grep --color=auto'
+	alias egrep='egrep --color=auto'
+	alias fgrep='fgrep --color=auto'
+fi
 
 alias edit='vim'
 #alias vimenc "vim -u ~/encrypted_vim_rc -x"
