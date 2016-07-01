@@ -7,7 +7,7 @@ set t_Co=256
 let g:solarized_termcolors=256
 
 filetype plugin indent on
-colorscheme solarized
+colorscheme phix
 set background=dark
 
 if !exists('g:airline_symbols')
