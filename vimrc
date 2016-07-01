@@ -9,7 +9,6 @@ let g:solarized_termcolors=256
 filetype plugin indent on
 colorscheme solarized
 set background=dark
-let g:solarized_termcolors=256
 
 if !exists('g:airline_symbols')
   let g:airline_symbols = {}
