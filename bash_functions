@@ -8,6 +8,10 @@ COLOR_BLUE="\033[0;34m"
 COLOR_WHITE="\033[0;37m"
 COLOR_RESET="\033[0m"
 
+parse_git_branch() {
+    git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/'
+}
+
 function git_color {
     local git_status="$(git status 2> /dev/null)"
 
