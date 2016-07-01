@@ -26,7 +26,7 @@ alias bake='bundle exec rake'
 #Git Bash on windows doesn't have color options
 grepopt="--color=auto"
 (echo | grep $grepopt . 2>/dev/null)
-if [ $? -lt 2]; then
+if [ $? -lt 2 ]; then
 	alias grep='grep --color=auto'
 	alias egrep='egrep --color=auto'
 	alias fgrep='fgrep --color=auto'
