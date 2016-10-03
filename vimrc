@@ -85,6 +85,7 @@ set suffixesadd+=.php
 set suffixesadd+=.groovy
 set suffixesadd+=.html
 set suffixesadd+=.css
+set suffixesadd+=.less
 set suffixesadd+=.scss
 set suffixesadd+=.sass
 
