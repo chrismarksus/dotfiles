@@ -49,6 +49,6 @@
 [submodule "vim/bundle/vim-phix-colors"]
 	path = vim/bundle/vim-phix-colors
 	url = https://github.com/stuartherbert/vim-phix-colors.git
-[submodule "vim/bundle/bundle/vim-less"]
-	path = vim/bundle/bundle/vim-less
+[submodule "vim/bundle/vim-less"]
+	path = vim/bundle/vim-less
 	url = https://github.com/groenewege/vim-less.git
