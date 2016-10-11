@@ -15,6 +15,9 @@ if !exists('g:airline_symbols')
   let g:airline_theme='powerlineish'
 endif
 
+" CtrlP custom ignore
+let g:ctrlp_custom_ignore = 'node_modules\|bower_components\|DS_Store\|git'
+
 " unicode symbols
 let g:airline_left_sep = '»'
 let g:airline_left_sep = '▶'
