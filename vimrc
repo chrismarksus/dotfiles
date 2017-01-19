@@ -92,6 +92,7 @@ set suffixesadd+=.less
 set suffixesadd+=.scss
 set suffixesadd+=.sass
 
+autocmd Filetype less,css,scss,sass,stylus setlocal shiftwidth=4 tabstop=4 softtabstop=4 expandtab
 autocmd Filetype ruby setlocal shiftwidth=2 tabstop=2 softtabstop=2
 autocmd Filetype gitcommit,markdown,text,txt setlocal spell
 autocmd BufNewFile,BufRead *.json setfiletype json syntax=javascript
