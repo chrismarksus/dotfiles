@@ -1,13 +1,13 @@
-#dotfiles.cmarks
+# dotfiles.cmarks
 
 dot files are hidden configuration files. The files start with a '.' like .vimrc
 and .bashrc.
 
-####install
+#### install
 
 Run the script in the dotfile folder. It will move your files and create symlinks. But only run it once it is only a basic startup script.
 
-####plugins
+#### plugins
 
 vim plugins are added as git submodules when possible. There are also managed by
 the pathogen plugin.
