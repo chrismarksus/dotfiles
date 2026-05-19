@@ -16,7 +16,7 @@ This repository contains configuration for:
 Key files:
 - `bashrc` – Sources aliases/functions and sets a git-aware PS1 prompt.
 - `bash_aliases` – Navigation, colored ls/grep, history helpers, tmux color fix.
-- `bash_functions` – Git prompt color/branch logic (Cucumber/BDD helpers isolated as legacy).
+- `bash_functions` – Git prompt color/branch logic (Cucumber/BDD helpers now isolated as legacy).
 - `vimrc` – Classic Vim setup (Pathogen + phix colorscheme).
 - `encrypted_vimrc` – Minimal secure settings (no backups/swaps).
 - `tmux.conf` – Enables mouse support.
