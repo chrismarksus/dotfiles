@@ -45,6 +45,11 @@ function countFilesByExtension(){
   find "$1" -type f | rev | cut -d . -f1 | rev | sort | uniq -ic | sort -rn
 }
 
+# =============================================================================
+# LEGACY / ISOLATED - Ruby/Cucumber specific (kept for reference only)
+# The author likes BDD but no longer works with Ruby.
+# Consider replacing with Cucumber.js (Node) or behave (Python) in the future.
+# =============================================================================
 # Report the number of cucumber step used bt type
 # Just cd to your root cucumber directory and call the method
 function cucumberStepStat(){
