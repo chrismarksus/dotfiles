@@ -34,15 +34,30 @@ cd ~/dotfiles
 
 The script:
 1. Creates `~/dotfiles_old/` backup.
-2. Moves existing dotfiles and creates symlinks (`~/.bashrc`, `~/.vimrc`, `~/.vim`, `~/.tmux.conf`, etc.).
+2. Moves existing dotfiles and creates symlinks.
 3. Initializes git submodules.
 4. Sets git defaults (`core.editor=vi`, `color.ui=auto`).
+5. Symlinks `nvim/` → `~/.config/nvim`.
 
 **Notes / Current State**:
 - Run only once (or after backups).
-- `install.sh` references `secure_vimrc` which has been renamed to `encrypted_vimrc`.
-- `bash_aliases` and `bash_functions` are sourced by `bashrc` but not automatically symlinked.
+- Neovim config is now included via symlink to `~/.config/nvim`.
+- Legacy Ruby/Cucumber code has been isolated.
 - After install, run `git submodule update --init --recursive` if needed.
+
+## Neovim (Recommended)
+
+Modern Neovim configuration lives in `nvim/`.
+
+- Uses `lazy.nvim` for plugin management
+- Includes Treesitter, LSP (via Mason), Telescope, bufferline, etc.
+- Run Neovim and plugins will auto-install on first launch
+
+Manual link (if needed):
+```bash
+mkdir -p ~/.config
+ln -s ~/dotfiles/nvim ~/.config/nvim
+```
 
 ## Vim Plugins
 

@@ -37,3 +37,13 @@ done
 git submodule update --init --recursive
 git config --global core.editor vi
 git config --global color.ui auto
+
+# Neovim configuration symlink (to ~/.config/nvim)
+echo "Setting up Neovim configuration..."
+mkdir -p ~/.config
+if [ -d ~/.config/nvim ] || [ -L ~/.config/nvim ]; then
+    echo "Backing up existing Neovim config to $olddir/nvim"
+    mv ~/.config/nvim "$olddir/nvim"
+fi
+ln -s "$dir/nvim" ~/.config/nvim
+echo "Neovim config symlinked to ~/.config/nvim"
