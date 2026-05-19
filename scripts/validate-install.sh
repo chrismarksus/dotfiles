@@ -1,28 +1,80 @@
 #!/bin/bash
-# Basic validation script for dotfiles installation
+# Enhanced validation script for dotfiles installation
 
-set -e
+set +e  # Continue on errors for full reporting
 
 echo "=== Validating dotfiles installation ==="
+echo ""
 
-# Check symlinks
+PASS=0
+FAIL=0
+
+check() {
+    if eval "$1"; then
+        echo "✓ $2"
+        ((PASS++))
+    else
+        echo "✗ $2"
+        ((FAIL++))
+    fi
+}
+
 echo "Checking symlinks..."
-[ -L "$HOME/.bashrc" ] && echo "✓ .bashrc symlinked" || echo "✗ .bashrc missing"
-[ -L "$HOME/.vimrc" ] && echo "✓ .vimrc symlinked" || echo "✗ .vimrc missing"
-[ -L "$HOME/.config/nvim" ] && echo "✓ Neovim config symlinked" || echo "✗ Neovim config missing"
-[ -L "$HOME/.tmux.conf" ] && echo "✓ .tmux.conf symlinked" || echo "✗ .tmux.conf missing"
+check '[ -L "$HOME/.bashrc" ]'           ".bashrc is symlinked"
+check '[ -L "$HOME/.vimrc" ]'            ".vimrc is symlinked"
+check '[ -L "$HOME/.config/nvim" ]'      "Neovim config is symlinked"
+check '[ -L "$HOME/.tmux.conf" ]'        ".tmux.conf is symlinked"
+check '[ -L "$HOME/.bash_aliases" ]'     "bash_aliases is symlinked"
+check '[ -L "$HOME/.bash_functions" ]'   "bash_functions is symlinked"
+echo ""
 
-# Check that bash functions can be sourced
-echo "Testing bash functions..."
-source "$HOME/.bashrc" 2>/dev/null || echo "⚠ Could not source .bashrc (may be ok)"
+echo "Checking git configuration..."
+check 'git config --global core.editor | grep -q vi' "git core.editor set to vi"
+check 'git config --global color.ui | grep -q auto'  "git color.ui set to auto"
+echo ""
 
-# Test Neovim startup
+echo "Testing bash environment..."
+if source "$HOME/.bashrc" 2>/dev/null; then
+    echo "✓ .bashrc sources without error"
+    ((PASS++))
+else
+    echo "✗ .bashrc failed to source"
+    ((FAIL++))
+fi
+
+# Check for key functions
+if declare -F git_branch &>/dev/null; then
+    echo "✓ git_branch function available"
+    ((PASS++))
+else
+    echo "✗ git_branch function missing"
+    ((FAIL++))
+fi
+echo ""
+
 echo "Testing Neovim..."
 if command -v nvim &> /dev/null; then
-    nvim --headless -c "q" 2>/dev/null && echo "✓ Neovim starts successfully" || echo "⚠ Neovim had issues"
+    if nvim --headless --clean -c "lua print('Neovim Lua works')" -c "q" &>/dev/null; then
+        echo "✓ Neovim starts and runs Lua"
+        ((PASS++))
+    else
+        echo "✗ Neovim failed to start properly"
+        ((FAIL++))
+    fi
 else
     echo "⚠ Neovim not found in PATH"
 fi
-
 echo ""
-echo "=== Validation complete ==="
+
+echo "=== Validation Summary ==="
+echo "Passed: $PASS"
+echo "Failed: $FAIL"
+echo ""
+
+if [ $FAIL -eq 0 ]; then
+    echo "✓ All checks passed!"
+    exit 0
+else
+    echo "✗ Some checks failed"
+    exit 1
+fi
