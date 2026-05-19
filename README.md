@@ -6,22 +6,24 @@ A personal collection of dotfiles for a productive Unix/Linux development enviro
 
 This repository contains configuration for:
 
-- **Bash**: Custom prompt with git status colors, useful aliases, and helper functions (including Cucumber/BDD test statistics).
-- **Vim**: Pathogen-managed plugin system with many git submodules, extensive editing settings, filetype support (JS, Ruby, Cucumber, etc.), and airline statusline.
+- **Bash**: Custom prompt with git status colors, useful aliases, and helper functions.
+- **Vim / Neovim**: Classic Vim setup (being modernized) + focus on a new Neovim configuration.
 - **Tmux**: Minimal mouse-enabled configuration.
-- **Other**: Conky system monitor, custom ctags for JavaScript, and an encrypted/minimal vimrc variant.
+- **Other**: Conky system monitor, custom ctags for JavaScript, and an encrypted vimrc variant.
+
+**Note**: Ruby/Cucumber-specific helpers (e.g. `cucumberStepStat`) have been isolated as legacy code. BDD-style testing is still appreciated but will move to non-Ruby options (Cucumber.js, Python behave, etc.) in the future.
 
 Key files:
 - `bashrc` – Sources aliases/functions and sets a git-aware PS1 prompt.
 - `bash_aliases` – Navigation, colored ls/grep, history helpers, tmux color fix.
-- `bash_functions` – Git prompt color/branch logic + `cucumberStepStat()` for BDD reporting.
-- `vimrc` – Pathogen setup, phix colorscheme, airline, CtrlP, 4-space defaults (2 for Ruby), many autocmds.
+- `bash_functions` – Git prompt color/branch logic (Cucumber/BDD helpers isolated as legacy).
+- `vimrc` – Classic Vim setup (Pathogen + phix colorscheme).
 - `encrypted_vimrc` – Minimal secure settings (no backups/swaps).
 - `tmux.conf` – Enables mouse support.
 - `conkyrc` – System monitor configuration.
 - `ctags` – Extended JavaScript tag patterns.
-- `install.sh` – Symlink installer (see notes below).
-- `vim/bundle/` – 16+ Vim plugins as git submodules.
+- `install.sh` – Symlink installer (now includes bash_aliases and bash_functions).
+- `vim/bundle/` – Legacy Vim plugins (being phased toward modern Neovim setup).
 
 ## Install
 

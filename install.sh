@@ -7,7 +7,7 @@
 
 dir=~/dotfiles                    # dotfiles directory
 olddir=~/dotfiles_old             # old dotfiles backup directory
-files="bashrc vimrc vim secure_vimrc tmux.conf"          # list of files/folders to symlink in homedir
+files="bashrc vimrc vim encrypted_vimrc tmux.conf bash_aliases bash_functions"  # files/folders to symlink in homedir
 
 ##########
 
@@ -23,7 +23,7 @@ echo "...done"
 # move any existing dotfiles in homedir to dotfiles_old directory, then create symlinks 
 for file in $files; do
     if [[ -h ~/.$file ]]; then
-        echo "A symblic link for $file already exists, Deleteing link!"
+        echo "A symbolic link for $file already exists. Deleting link!"
         rm ~/.$file
     else
         echo "Moving any existing dotfiles from ~ to $olddir"
