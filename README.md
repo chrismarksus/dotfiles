@@ -59,6 +59,23 @@ mkdir -p ~/.config
 ln -s ~/dotfiles/nvim ~/.config/nvim
 ```
 
+## Testing with Docker
+
+This repo includes a Docker-based test to validate the installation in a clean environment.
+
+```bash
+# Build and run the test
+docker build -t dotfiles-test .
+docker run --rm dotfiles-test
+```
+
+This will:
+- Create a clean Ubuntu container
+- Run `install.sh`
+- Validate symlinks and basic functionality
+
+Useful when making changes to `install.sh` or the Neovim config.
+
 ## Vim Plugins
 
 Plugins are managed via [pathogen.vim](https://github.com/tpope/vim-pathogen) and stored as git submodules in `vim/bundle/`.
