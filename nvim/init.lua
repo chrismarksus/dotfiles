@@ -74,6 +74,22 @@ require("lazy").setup({
     end,
   },
 
+  -- Git signs in gutter
+  {
+    "lewis6991/gitsigns.nvim",
+    config = function()
+      require("gitsigns").setup()
+    end,
+  },
+
+  -- Commenting (gcc / gc in visual mode)
+  {
+    "numToStr/Comment.nvim",
+    config = function()
+      require("Comment").setup()
+    end,
+  },
+
   -- File explorer
   {
     "nvim-tree/nvim-tree.lua",
