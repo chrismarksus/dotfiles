@@ -64,7 +64,10 @@ ln -s ~/dotfiles/nvim ~/.config/nvim
 This repo includes a Docker-based test to validate the installation in a clean environment.
 
 ```bash
-# Build and run the test
+# Easy way (recommended)
+./test.sh
+
+# Or manually
 docker build -t dotfiles-test .
 docker run --rm dotfiles-test
 ```
