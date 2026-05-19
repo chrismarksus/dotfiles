@@ -42,6 +42,11 @@ require("lazy").setup({
     lazy = false,
     priority = 1000,
     config = function()
+      require("tokyonight").setup({
+        style = "night",        -- night, storm, moon, day
+        transparent = false,
+        terminal_colors = true,
+      })
       vim.cmd.colorscheme("tokyonight")
     end,
   },
@@ -52,6 +57,20 @@ require("lazy").setup({
     dependencies = { "nvim-tree/nvim-web-devicons" },
     config = function()
       require("lualine").setup()
+    end,
+  },
+
+  -- Buffer line (top tabs)
+  {
+    "akinsho/bufferline.nvim",
+    dependencies = { "nvim-tree/nvim-web-devicons" },
+    config = function()
+      require("bufferline").setup({
+        options = {
+          diagnostics = "nvim_lsp",
+          separator_style = "slant",
+        },
+      })
     end,
   },
 
@@ -140,6 +159,10 @@ require("lazy").setup({
 vim.keymap.set("n", "<leader>e", ":NvimTreeToggle<CR>", { desc = "Toggle file explorer" })
 vim.keymap.set("n", "<leader>ff", ":Telescope find_files<CR>", { desc = "Find files" })
 vim.keymap.set("n", "<leader>fg", ":Telescope live_grep<CR>", { desc = "Live grep" })
+
+-- Buffer navigation
+vim.keymap.set("n", "<Tab>", ":BufferLineCycleNext<CR>", { desc = "Next buffer" })
+vim.keymap.set("n", "<S-Tab>", ":BufferLineCyclePrev<CR>", { desc = "Previous buffer" })
 
 -- LSP keymaps
 vim.keymap.set("n", "K", vim.lsp.buf.hover, { desc = "Hover documentation" })
