@@ -30,6 +30,9 @@ vim.opt.smartcase = true
 vim.opt.hlsearch = true
 vim.opt.incsearch = true
 
+-- Tag files for ctags integration (works alongside LSP)
+vim.opt.tags = { './tags', '../tags' }
+
 -- Leader key
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
