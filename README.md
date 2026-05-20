@@ -4,6 +4,34 @@ A personal collection of dotfiles for a productive Unix/Linux development enviro
 
 **Primary Environment**: WSL (Windows Subsystem for Linux) on Windows 10/11, with occasional use on native Linux and macOS.
 
+## Getting Started on Windows (WSL)
+
+This repo is primarily used inside **WSL** on Windows 10/11.
+
+### One-time WSL setup
+
+1. Open **PowerShell** or Command Prompt **as Administrator**.
+2. Run:
+
+   ```powershell
+   wsl --install -d Ubuntu
+   ```
+
+3. Reboot when prompted.
+4. Launch **Ubuntu** from the Start menu or Windows Terminal.
+
+You now have a bash shell. Continue inside that terminal.
+
+### Clone and install
+
+```bash
+git clone https://github.com/chris/dotfiles.git ~/dotfiles
+cd ~/dotfiles
+./install.sh
+```
+
+See the Install section below for details.
+
 ## Overview
 
 This repository contains configuration for:
