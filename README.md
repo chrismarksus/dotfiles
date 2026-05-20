@@ -2,6 +2,8 @@
 
 A personal collection of dotfiles for a productive Unix/Linux development environment, focused on Vim, Bash, Tmux, and related tools.
 
+**Primary Environment**: WSL (Windows Subsystem for Linux) on Windows 10/11, with occasional use on native Linux and macOS.
+
 ## Overview
 
 This repository contains configuration for:
@@ -42,16 +44,28 @@ The script:
 **Notes / Current State**:
 - Run only once (or after backups).
 - Neovim config is now included via symlink to `~/.config/nvim`.
+- `bash_aliases` and `bash_functions` are now symlinked.
 - Legacy Ruby/Cucumber code has been isolated.
 - After install, run `git submodule update --init --recursive` if needed.
+
+## Quick Start
+
+```bash
+cd ~/dotfiles
+./install.sh          # Set up symlinks and Neovim config
+./test.sh             # Run Docker validation (requires Docker)
+nvim                  # Launch Neovim (plugins auto-install on first run)
+```
 
 ## Neovim (Recommended)
 
 Modern Neovim configuration lives in `nvim/`.
 
+This is the **recommended** setup going forward. It coexists with the classic Vim configuration — you can use either.
+
 - Uses `lazy.nvim` for plugin management
-- Includes Treesitter, LSP (via Mason), Telescope, bufferline, etc.
-- Run Neovim and plugins will auto-install on first launch
+- Includes Treesitter, LSP (via Mason), Telescope, bufferline, gitsigns, etc.
+- Plugins auto-install on first launch
 
 Manual link (if needed):
 ```bash
@@ -59,9 +73,13 @@ mkdir -p ~/.config
 ln -s ~/dotfiles/nvim ~/.config/nvim
 ```
 
+**Note**: The classic `vimrc` and Pathogen plugins remain available for backward compatibility.
+
 ## Testing with Docker
 
 This repo includes a Docker-based test to validate the installation in a clean environment.
+
+**Prerequisite**: Docker must be installed (see [Docker Desktop](https://www.docker.com/products/docker-desktop/) for WSL/Windows users).
 
 ```bash
 # Easy way (recommended)
@@ -79,20 +97,25 @@ This will:
 
 Useful when making changes to `install.sh` or the Neovim config.
 
-## Vim Plugins
+## Legacy Vim Setup
 
-Plugins are managed via [pathogen.vim](https://github.com/tpope/vim-pathogen) and stored as git submodules in `vim/bundle/`.
+The original Vim configuration (still functional) uses [pathogen.vim](https://github.com/tpope/vim-pathogen) with git submodules.
+
+### Legacy Plugins
 
 Current submodules (from `.gitmodules`):
 - vim-pathogen, vim-fugitive, vim-colors-solarized, vim-javascript, vim-snippets, vim-snipmate, vim-addon-mw-utils, tlib-vim, vim-cucumber, vim-syntastic, vim-airline, vim-gitgutter, spink, vim-unimpaired, supertab, vim-trailing-whitespace, vim-phix-colors.
 
-See also the original plugin list in the history or FAQ below for links.
+Use these only if you prefer classic Vim. New development should use the Neovim configuration above.
 
 ## Special Features
 
 - **Git-aware Bash Prompt**: Shows current directory + branch in color (green=clean, red=dirty, yellow=ahead, ochre=other).
-- **Cucumber Step Statistics**: `cucumberStepStat /path/to/project` reports usage of Given/When/Then steps in feature files vs. step definitions + file-type breakdown.
 - **Enhanced ctags**: Custom regexes for modern JavaScript (objects, functions, variables, arrays, primitives).
+
+### Legacy Features
+
+- **Cucumber Step Statistics** (`cucumberStepStat`): Kept for reference. The author prefers BDD-style testing but no longer works with Ruby. Consider Cucumber.js or Python's `behave` as modern alternatives.
 
 ## FAQ
 
@@ -112,6 +135,13 @@ See [Stack Overflow](https://stackoverflow.com/questions/5828324/update-git-subm
 
 ## Contributing / Notes
 
-This is a personal setup from around 2010 with various updates over the years. Some plugins are older (Syntastic, Pathogen) and may benefit from modern alternatives (e.g., ALE or coc.nvim, vim-plug). The Cucumber functions suggest heavy BDD/Ruby usage in the past.
+This is a personal setup originally from around 2010, significantly modernized in 2026.
+
+- **Neovim** is now the primary focus (with `lazy.nvim`, LSP, Treesitter, etc.).
+- Classic Vim + Pathogen setup is preserved for backward compatibility.
+- Docker-based testing was added for safer development.
+- Legacy Ruby/Cucumber helpers have been isolated.
+
+The project serves as both a daily driver and a learning/practice environment while returning to development after a 10-year break.
 
 Feel free to fork and adapt!
