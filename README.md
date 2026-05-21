@@ -48,11 +48,22 @@ The script:
 - Legacy Ruby/Cucumber code has been isolated.
 - After install, run `git submodule update --init --recursive` if needed.
 
+## Uninstall
+
+```bash
+./uninstall.sh           # Interactive uninstall (restores from backup)
+./uninstall.sh --dry-run # Preview what would be removed/restored
+./uninstall.sh --force   # Skip confirmation prompt
+```
+
+The uninstall script removes all symlinks created by `install.sh`, restores originals from `~/dotfiles_old` when available, and unsets the git configuration changes.
+
 ## Quick Start
 
 ```bash
 cd ~/dotfiles
 ./install.sh          # Set up symlinks and Neovim config
+./uninstall.sh        # Revert everything (with backup restore)
 ./test.sh             # Run Docker validation (requires Docker)
 nvim                  # Launch Neovim (plugins auto-install on first run)
 ```
