@@ -1,0 +1,40 @@
+{
+  "version": "0.2",
+  "language": "en",
+  "words": [
+    "dotfiles",
+    "bashrc",
+    "bash_aliases",
+    "bash_functions",
+    "vimrc",
+    "encrypted_vimrc",
+    "tmux",
+    "conkyrc",
+    "ctags",
+    "install.sh",
+    "Neovim",
+    "lazy.nvim",
+    "tokyonight",
+    "lualine",
+    "bufferline",
+    "gitsigns",
+    "nvim-tree",
+    "Treesitter",
+    "Mason",
+    "LSP",
+    "PS1",
+    "cucumberStepStat",
+    "phix",
+    "Pathogen",
+    "favour",
+    "up-to-date-list",
+    "crunchbanglinux",
+    "submodules",
+    "symlinks"
+  ],
+  "ignorePaths": [
+    "node_modules/**",
+    ".git/**",
+    "vim/bundle/**"
+  ]
+}
