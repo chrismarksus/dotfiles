@@ -19,6 +19,26 @@ check() {
     fi
 }
 
+echo "Checking core dependencies..."
+for tool in vim nvim git tmux curl; do
+    if command -v "$tool" &> /dev/null; then
+        echo "✓ $tool found in PATH"
+        ((PASS++))
+    else
+        echo "✗ $tool not found"
+        ((FAIL++))
+    fi
+done
+# Bash version
+if [ "${BASH_VERSION%%.*}" -ge 4 ]; then
+    echo "✓ Bash >= 4.0"
+    ((PASS++))
+else
+    echo "✗ Bash < 4.0"
+    ((FAIL++))
+fi
+echo ""
+
 echo "Checking symlinks..."
 check '[ -L "$HOME/.bashrc" ]'           ".bashrc is symlinked"
 check '[ -L "$HOME/.vimrc" ]'            ".vimrc is symlinked"

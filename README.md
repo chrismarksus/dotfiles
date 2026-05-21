@@ -27,6 +27,28 @@ Key files:
 - `install.sh` – Symlink installer (now includes bash_aliases and bash_functions).
 - `vim/bundle/` – Legacy Vim plugins (being phased toward modern Neovim setup).
 
+## Prerequisites
+
+Before running the installer you need these core tools (the script will warn if any are missing):
+
+- **vim** and/or **neovim** (nvim)
+- **git**
+- **tmux**
+- **curl**
+- **bash** ≥ 4.0
+
+**Quick install commands** (common platforms):
+
+```bash
+# Debian / Ubuntu / WSL
+sudo apt-get update && sudo apt-get install -y vim neovim git tmux curl
+
+# macOS (Homebrew)
+brew install vim neovim git tmux curl
+```
+
+Neovim plugins are managed automatically by `lazy.nvim` on first launch.
+
 ## Install
 
 ```bash
