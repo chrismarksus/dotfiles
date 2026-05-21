@@ -3,6 +3,36 @@
 # This script creates symlinks from the home directory to any desired dotfiles in ~/dotfiles
 ############################
 
+# Dependency checks (non-fatal by default)
+check_dependency() {
+    local cmd=$1
+    local pkg=$2
+    if ! command -v "$cmd" &> /dev/null; then
+        echo "⚠ $cmd not found. Install with:"
+        if [[ "$OSTYPE" == "darwin"* ]]; then
+            echo "  brew install $pkg"
+        elif [[ -f /etc/debian_version ]]; then
+            echo "  sudo apt-get install -y $pkg"
+        else
+            echo "  (use your package manager to install $pkg)"
+        fi
+        return 1
+    fi
+    return 0
+}
+
+echo "Checking core dependencies..."
+check_dependency vim vim || true
+check_dependency nvim neovim || true
+check_dependency git git || true
+check_dependency tmux tmux || true
+check_dependency curl curl || true
+# Bash version check (require >= 4)
+if [ "${BASH_VERSION%%.*}" -lt 4 ]; then
+    echo "⚠ Bash < 4 detected. Some features may not work."
+fi
+echo "...dependency check complete"
+
 ########## Variables
 
 dir=~/dotfiles                    # dotfiles directory

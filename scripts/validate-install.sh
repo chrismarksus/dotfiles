@@ -19,6 +19,26 @@ check() {
     fi
 }
 
+echo "Checking core dependencies..."
+for tool in vim nvim git tmux curl; do
+    if command -v "$tool" &> /dev/null; then
+        echo "✓ $tool found in PATH"
+        ((PASS++))
+    else
+        echo "✗ $tool not found"
+        ((FAIL++))
+    fi
+done
+# Bash version
+if [ "${BASH_VERSION%%.*}" -ge 4 ]; then
+    echo "✓ Bash >= 4.0"
+    ((PASS++))
+else
+    echo "✗ Bash < 4.0"
+    ((FAIL++))
+fi
+echo ""
+
 echo "Checking symlinks..."
 check '[ -L "$HOME/.bashrc" ]'           ".bashrc is symlinked"
 check '[ -L "$HOME/.vimrc" ]'            ".vimrc is symlinked"
@@ -54,8 +74,13 @@ echo ""
 
 echo "Testing Neovim configuration..."
 if command -v nvim &> /dev/null; then
-    # Test 1: Config loads without fatal errors (checks for success print from init.lua)
-    if nvim --headless -c "sleep 1200m" -c "qa" 2>&1 | grep -q "Neovim config loaded successfully"; then
+    # Temp lua files + timeout protection for reliable, fast Docker validation
+    cat > /tmp/test_nvim.lua << 'LUAEOF'
+print("Neovim config loaded successfully")
+vim.cmd('qa')
+LUAEOF
+
+    if timeout 15s nvim --headless -c "luafile /tmp/test_nvim.lua" 2>&1 | grep -q "Neovim config loaded successfully"; then
         echo "✓ Neovim config loads and prints success message"
         ((PASS++))
     else
@@ -63,17 +88,17 @@ if command -v nvim &> /dev/null; then
         ((FAIL++))
     fi
 
-    # Test 2: lazy.nvim bootstrapped and loaded plugins
-    if nvim --headless -c "
-        lua 
-        local ok, lazy = pcall(require, 'lazy')
-        if ok and lazy then
-            print('lazy_plugins:' .. #lazy.plugins())
-        else
-            print('lazy_not_loaded')
-        end
-        vim.cmd('qa')
-    " 2>&1 | grep -q "lazy_plugins:[0-9]"; then
+    cat > /tmp/test_lazy.lua << 'LUAEOF'
+local ok, lazy = pcall(require, 'lazy')
+if ok and lazy then
+    print('lazy_plugins:' .. #lazy.plugins())
+else
+    print('lazy_not_loaded')
+end
+vim.cmd('qa')
+LUAEOF
+
+    if timeout 15s nvim --headless -c "luafile /tmp/test_lazy.lua" 2>&1 | grep -q "lazy_plugins:[0-9]"; then
         echo "✓ lazy.nvim loaded with plugins"
         ((PASS++))
     else
@@ -81,14 +106,14 @@ if command -v nvim &> /dev/null; then
         ((FAIL++))
     fi
 
-    # Test 3: Core plugins are loadable (tokyonight + lualine as representatives)
-    if nvim --headless -c "
-        lua 
-        local has_tokyo = pcall(require, 'tokyonight')
-        local has_lualine = pcall(require, 'lualine')
-        print('plugins_ok:' .. (has_tokyo and has_lualine and 'true' or 'false'))
-        vim.cmd('qa')
-    " 2>&1 | grep -q "plugins_ok:true"; then
+    cat > /tmp/test_plugins.lua << 'LUAEOF'
+local has_tokyo = pcall(require, 'tokyonight')
+local has_lualine = pcall(require, 'lualine')
+print('plugins_ok:' .. (has_tokyo and has_lualine and 'true' or 'false'))
+vim.cmd('qa')
+LUAEOF
+
+    if timeout 15s nvim --headless -c "luafile /tmp/test_plugins.lua" 2>&1 | grep -q "plugins_ok:true"; then
         echo "✓ Core plugins (tokyonight, lualine) are loadable"
         ((PASS++))
     else
