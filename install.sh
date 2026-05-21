@@ -26,15 +26,17 @@ for file in $files; do
         echo "A symbolic link for $file already exists. Deleting link!"
         rm ~/.$file
     else
-        echo "Moving any existing dotfiles from ~ to $olddir"
-        mv ~/.$file ~/dotfiles_old/
+        if [ -e ~/.$file ]; then
+            echo "Moving any existing dotfiles from ~ to $olddir"
+            mv ~/.$file ~/dotfiles_old/
+        fi
     fi
 
     echo "Creating symlink to $file in home directory."
     ln -s $dir/$file ~/.$file
 done
 
-git submodule update --init --recursive
+git submodule update --init --recursive || true
 git config --global core.editor vi
 git config --global color.ui auto
 
