@@ -52,13 +52,47 @@ else
 fi
 echo ""
 
-echo "Testing Neovim..."
+echo "Testing Neovim configuration..."
 if command -v nvim &> /dev/null; then
-    if nvim --headless --clean -c "lua print('Neovim Lua works')" -c "q" &>/dev/null; then
-        echo "✓ Neovim starts and runs Lua"
+    # Test 1: Config loads without fatal errors (checks for success print from init.lua)
+    if nvim --headless -c "sleep 1200m" -c "qa" 2>&1 | grep -q "Neovim config loaded successfully"; then
+        echo "✓ Neovim config loads and prints success message"
         ((PASS++))
     else
-        echo "✗ Neovim failed to start properly"
+        echo "✗ Neovim config failed to load cleanly"
+        ((FAIL++))
+    fi
+
+    # Test 2: lazy.nvim bootstrapped and loaded plugins
+    if nvim --headless -c "
+        lua 
+        local ok, lazy = pcall(require, 'lazy')
+        if ok and lazy then
+            print('lazy_plugins:' .. #lazy.plugins())
+        else
+            print('lazy_not_loaded')
+        end
+        vim.cmd('qa')
+    " 2>&1 | grep -q "lazy_plugins:[0-9]"; then
+        echo "✓ lazy.nvim loaded with plugins"
+        ((PASS++))
+    else
+        echo "✗ lazy.nvim did not load or no plugins registered"
+        ((FAIL++))
+    fi
+
+    # Test 3: Core plugins are loadable (tokyonight + lualine as representatives)
+    if nvim --headless -c "
+        lua 
+        local has_tokyo = pcall(require, 'tokyonight')
+        local has_lualine = pcall(require, 'lualine')
+        print('plugins_ok:' .. (has_tokyo and has_lualine and 'true' or 'false'))
+        vim.cmd('qa')
+    " 2>&1 | grep -q "plugins_ok:true"; then
+        echo "✓ Core plugins (tokyonight, lualine) are loadable"
+        ((PASS++))
+    else
+        echo "✗ Core plugins failed to load"
         ((FAIL++))
     fi
 else
