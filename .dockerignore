@@ -1,0 +1,15 @@
+# .dockerignore - speeds up Docker builds by excluding unnecessary files
+.git
+.gitignore
+*.md
+release-notes/
+test.sh
+dev.sh
+.dockerignore
+.vscode/
+.idea/
+node_modules/
+*.log
+.DS_Store
+vim/bundle/
+# Keep nvim/ and scripts/ as they are used by install.sh

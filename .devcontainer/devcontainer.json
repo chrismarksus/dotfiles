@@ -1,0 +1,35 @@
+{
+  "name": "Dotfiles Dev Container",
+  "build": {
+    "dockerfile": "../Dockerfile.dev",
+    "context": ".."
+  },
+  "remoteUser": "root",
+  "workspaceFolder": "/workspace",
+  "workspaceMount": "source=${localWorkspaceFolder},target=/workspace,type=bind,consistency=cached",
+  "mounts": [
+    // Example: mount your Windows SSH keys (uncomment and adjust path if needed)
+    // "source=${localEnv:USERPROFILE}/.ssh,target=/root/.ssh,type=bind,consistency=cached"
+  ],
+  "postCreateCommand": "echo '✅ Dotfiles Dev Container ready! Use the integrated terminal for nvim, tmux, or bash. All your dotfiles (Neovim, bash prompt, git config) are active.'",
+  "containerEnv": {
+    "CONTAINER": "true",
+    "DOTFILES_DEV": "true"
+  },
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-vscode-remote.remote-containers",
+        "GitHub.copilot",
+        "eamodio.gitlens",
+        "dbaeumer.vscode-eslint",
+        "esbenp.prettier-vscode"
+      ],
+      "settings": {
+        "terminal.integrated.shell.linux": "/bin/bash"
+      }
+    }
+  },
+  "forwardPorts": [],
+  "features": {}
+}

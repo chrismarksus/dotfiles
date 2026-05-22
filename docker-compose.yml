@@ -1,0 +1,26 @@
+# docker-compose.yml - Optional terminal-friendly dev workflow (secondary to Dev Container)
+# Usage: docker compose up -d && docker compose exec dev bash
+# Or: docker compose run --rm dev nvim /workspace/yourfile.js
+version: '3.8'
+
+services:
+  dev:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    image: dotfiles-dev
+    container_name: dotfiles-dev
+    working_dir: /workspace
+    volumes:
+      # Mount your Windows project folder(s) here
+      # Example (adjust path for your machine):
+      - ${HOST_PROJECTS:-C:/Users/REPLACE_ME/projects}:/workspace
+      # Optional: mount Windows home for SSH/gitconfig (uncomment & adjust)
+      # - ${USERPROFILE:-C:/Users/REPLACE_ME}/.ssh:/root/.ssh
+      # - ${USERPROFILE:-C:/Users/REPLACE_ME}/.gitconfig:/root/.gitconfig:ro
+    environment:
+      - TERM=xterm-256color
+    stdin_open: true
+    tty: true
+    # Default command keeps container running for exec
+    command: ["tail", "-f", "/dev/null"]
