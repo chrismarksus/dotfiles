@@ -9,11 +9,11 @@
 set -e
 
 # Allow overriding the host projects path via env var or first arg handling
-HOST_PROJECTS=${HOST_PROJECTS:-C:/Users/$USER/projects}
+HOST_PROJECTS=${HOST_PROJECTS:-$(pwd)}
 
 echo "🚀 Starting dotfiles dev container..."
 echo "   Mounting: $HOST_PROJECTS → /workspace"
-echo "   (Edit this path in docker-compose.yml or set HOST_PROJECTS env var)"
+echo "   (Create .env from .env.example or set HOST_PROJECTS env var)"
 
 # Ensure docker compose is available
 if ! command -v docker &> /dev/null; then

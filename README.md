@@ -186,6 +186,40 @@ docker compose up -d
 docker compose exec dev bash
 ```
 
+**Environment variables via `.env` file** (recommended for docker compose):
+
+1. Copy `.env.example` → `.env`
+2. Edit `.env` and set `HOST_PROJECTS` to the folder you want mounted at `/workspace`
+3. Docker Compose automatically reads `.env` — no other changes needed
+
+`.env` is listed in `.gitignore` so your local paths stay private.
+
+### Troubleshooting inside the container (when reporting issues to AI)
+
+When something isn't working inside the Dev Container or `docker compose`, include these outputs when asking for help:
+
+```bash
+# From host (PowerShell or WSL)
+docker compose logs --tail=100 dev
+docker ps
+docker inspect <container-id>
+
+# Inside the running container (use VS Code terminal or exec)
+docker compose exec dev bash
+# Then inside container:
+nvim --version
+nvim --headless -c 'lua print("lazy check"); vim.cmd("qa")' 2>&1
+echo $CONTAINER
+ls -la /workspace
+cat ~/.config/nvim/init.lua | head -30
+```
+
+**Common fixes inside the container**:
+- Neovim/lazy issues: `rm -rf ~/.local/share/nvim/lazy && nvim` (forces plugin reinstall)
+- Config not loading: `source ~/.bashrc && nvim`
+- Permission problems on mounted files: run as root (already default) or `chown -R root:root /workspace`
+- Rebuild everything: VS Code → "Dev Containers: Rebuild Container" or `docker compose down --rmi all && docker compose up -d`
+
 ## Legacy Vim Setup
 
 The original Vim configuration (still functional) uses [pathogen.vim](https://github.com/tpope/vim-pathogen) with git submodules.

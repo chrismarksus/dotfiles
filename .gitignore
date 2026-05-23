@@ -1,0 +1,25 @@
+# .gitignore - Dotfiles repository
+
+# Environment files with local machine-specific values
+.env
+
+# Editor / IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Logs and temporary files
+*.log
+tmp/
+temp/
+
+# Docker (optional local overrides)
+docker-compose.override.yml
+
+# Legacy / build artifacts
+vim/bundle/
