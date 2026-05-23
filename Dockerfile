@@ -1,4 +1,5 @@
 # Dockerfile for testing dotfiles installation
+# Test-only image. See .devcontainer/ for the portable development workflow.
 FROM ubuntu:22.04
 
 ENV DEBIAN_FRONTEND=noninteractive

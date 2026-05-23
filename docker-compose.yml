@@ -1,0 +1,31 @@
+# docker-compose.yml - Optional terminal-friendly dev workflow (secondary to Dev Container)
+# Usage: docker compose up -d && docker compose exec dev bash
+# Or: docker compose run --rm dev nvim /workspace/yourfile.js
+#
+# Environment variables:
+#   This file automatically reads variables from a .env file in the same directory.
+#   Copy .env.example → .env and customize it (HOST_PROJECTS, SSH_DIR, etc.).
+#   .env is gitignored so your local paths stay private.
+
+services:
+  dev:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    image: dotfiles-dev
+    container_name: dotfiles-dev
+    working_dir: /workspace
+    volumes:
+      # Mount host project directory into the container.
+      # Set HOST_PROJECTS in your .env file, or it defaults to the current directory.
+      - ${HOST_PROJECTS:-.}:/workspace
+
+      # Optional mounts (uncomment and set values in .env):
+      # - ${SSH_DIR:-$HOME/.ssh}:/root/.ssh
+      # - ${GITCONFIG_PATH:-$HOME/.gitconfig}:/root/.gitconfig:ro
+    environment:
+      - TERM=xterm-256color
+    stdin_open: true
+    tty: true
+    # Default command keeps container running for exec
+    command: ["tail", "-f", "/dev/null"]

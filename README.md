@@ -130,6 +130,96 @@ This will:
 
 Useful when making changes to `install.sh` or the Neovim config.
 
+## Development Workflow: Dev Container (Recommended & Portable)
+
+This is the **primary recommended way** to develop with your full dotfiles environment on Windows while editing files that live on your laptop.
+
+### Dummy's Guide: Using the Dev Container on Windows (Step-by-Step)
+
+**Prerequisites** (do this once):
+1. Install [Visual Studio Code](https://code.visualstudio.com/)
+2. Install [Docker Desktop for Windows](https://www.docker.com/products/docker-desktop/) and make sure it uses the **WSL2 backend** (default on modern installs)
+3. In VS Code, install the official **"Dev Containers"** extension by Microsoft (search for "Dev Containers" in Extensions view)
+
+**Everyday usage**:
+1. Clone or open this `dotfiles` folder in VS Code
+2. When prompted (or press `Ctrl+Shift+P` → type "Dev Containers: Reopen in Container"), click **"Reopen in Container"**
+3. Wait for the first build (it installs Neovim, runs `install.sh`, and pre-warms lazy.nvim plugins — can take a few minutes the very first time)
+4. Once the container is ready, open the **integrated terminal** in VS Code (`Ctrl+``)
+5. You now have:
+   - Full Neovim with lazy.nvim + tokyonight + lualine etc.
+   - Your custom bash prompt, aliases, git functions
+   - tmux available
+   - All configs from the dotfiles repo active
+
+**Working with your projects**:
+- The folder you opened in VS Code is automatically mounted at `/workspace` inside the container.
+- Simply edit files in VS Code (or use `nvim` inside the terminal) — changes are instantly reflected on both sides.
+- To work on a different Windows folder, you can add extra mounts in `.devcontainer/devcontainer.json` or use the optional `docker-compose.yml`.
+
+**Exiting / rebuilding**:
+- To leave the container: `Ctrl+Shift+P` → "Dev Containers: Reopen Folder Locally"
+- To rebuild after changing `Dockerfile.dev` or `.devcontainer/`: `Ctrl+Shift+P` → "Dev Containers: Rebuild Container"
+
+**Windows path tips**:
+- Docker Desktop accepts both `C:\path` and `C:/path` styles.
+- For extra mounts (SSH keys, etc.) use `${localEnv:USERPROFILE}` in the json.
+
+### Terminal-only Alternative (docker compose)
+
+If you prefer the terminal:
+
+```bash
+# Make the script executable once
+chmod +x dev.sh
+
+# Start and enter bash
+./dev.sh
+
+# Or run a specific command
+./dev.sh nvim /workspace/some-file.py
+```
+
+Or manually:
+```bash
+docker compose up -d
+docker compose exec dev bash
+```
+
+**Environment variables via `.env` file** (recommended for docker compose):
+
+1. Copy `.env.example` → `.env`
+2. Edit `.env` and set `HOST_PROJECTS` to the folder you want mounted at `/workspace`
+3. Docker Compose automatically reads `.env` — no other changes needed
+
+`.env` is listed in `.gitignore` so your local paths stay private.
+
+### Troubleshooting inside the container (when reporting issues to AI)
+
+When something isn't working inside the Dev Container or `docker compose`, include these outputs when asking for help:
+
+```bash
+# From host (PowerShell or WSL)
+docker compose logs --tail=100 dev
+docker ps
+docker inspect <container-id>
+
+# Inside the running container (use VS Code terminal or exec)
+docker compose exec dev bash
+# Then inside container:
+nvim --version
+nvim --headless -c 'lua print("lazy check"); vim.cmd("qa")' 2>&1
+echo $CONTAINER
+ls -la /workspace
+cat ~/.config/nvim/init.lua | head -30
+```
+
+**Common fixes inside the container**:
+- Neovim/lazy issues: `rm -rf ~/.local/share/nvim/lazy && nvim` (forces plugin reinstall)
+- Config not loading: `source ~/.bashrc && nvim`
+- Permission problems on mounted files: run as root (already default) or `chown -R root:root /workspace`
+- Rebuild everything: VS Code → "Dev Containers: Rebuild Container" or `docker compose down --rmi all && docker compose up -d`
+
 ## Legacy Vim Setup
 
 The original Vim configuration (still functional) uses [pathogen.vim](https://github.com/tpope/vim-pathogen) with git submodules.

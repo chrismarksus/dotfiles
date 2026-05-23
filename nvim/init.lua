@@ -33,6 +33,17 @@ vim.opt.incsearch = true
 -- Tag files for ctags integration (works alongside LSP)
 vim.opt.tags = { './tags', '../tags' }
 
+-- Container / Dev Container friendly settings (safe when editing mounted Windows volumes)
+-- Prevents permission/ownership issues and keeps undo/swap inside the container
+local is_container = vim.env.CONTAINER or vim.env.REMOTE_CONTAINERS or vim.fn.isdirectory('/.dockerenv') == 1
+if is_container then
+  vim.opt.undodir = vim.fn.stdpath("state") .. "/undo"
+  vim.opt.directory = vim.fn.stdpath("state") .. "/swap"
+  vim.opt.backupdir = vim.fn.stdpath("state") .. "/backup"
+  vim.opt.undofile = true
+  vim.opt.swapfile = false   -- disable swap on mounted volumes for cleanliness
+end
+
 -- Leader key
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "

@@ -1,0 +1,50 @@
+# Dockerfile.dev - Development image for portable Dev Container / docker workflows
+# Based on the test Dockerfile but optimized for daily development with volume mounts
+# Root user for simplicity on Windows + Docker Desktop (WSL2)
+# /workspace as standard mount point for host code
+
+FROM ubuntu:22.04
+
+ENV DEBIAN_FRONTEND=noninteractive \
+    TERM=xterm-256color
+
+# Install dependencies (same as test image + build tools for common dev)
+RUN apt-get update && apt-get install -y \
+    git \
+    curl \
+    vim \
+    neovim \
+    tmux \
+    bash \
+    sudo \
+    build-essential \
+    ca-certificates \
+    gnupg \
+    lsb-release \
+    && rm -rf /var/lib/apt/lists/*
+
+# Create dev user (but default to root for simplicity on Windows mounts)
+RUN useradd -ms /bin/bash devuser && \
+    echo "devuser ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
+
+# Copy dotfiles repo into the image (for install.sh and configs)
+COPY --chown=root:root . /root/dotfiles
+
+# Run the install script (sets up symlinks, Neovim config, git settings)
+RUN cd /root/dotfiles && bash install.sh || true
+
+# Pre-warm Neovim + lazy.nvim plugins so first launch in container is fast
+# This step is similar to the test image but can be skipped with build arg if desired
+RUN nvim --headless -c 'lua print("Neovim pre-warm complete"); vim.cmd("qa")' 2>/dev/null || true
+
+# Optional: run validation (commented for dev image to keep it lighter)
+# RUN /root/dotfiles/scripts/validate-install.sh || true
+
+# Default working directory for mounted projects
+WORKDIR /workspace
+
+# Default to root (simple for Windows bind mounts - per plan)
+USER root
+
+# Keep container alive with bash by default (or override with nvim/tmux)
+CMD ["bash"]
