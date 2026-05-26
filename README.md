@@ -70,6 +70,35 @@ The script:
 - Legacy Ruby/Cucumber code has been isolated.
 - After install, run `git submodule update --init --recursive` if needed.
 
+## Development Container (Docker + WSL)
+
+A convenient way to get a consistent Linux dev environment on Windows using Docker.
+
+### Quick start
+```bash
+# 1. Copy and edit .env (set the folder you want mounted at /workspace)
+cp .env.example .env
+# For this repo on WSL: HOST_PROJECTS=/home/cmarks/claude-projects/dotfiles
+
+# 2. Start the container (from WSL terminal recommended)
+./dev.sh
+```
+
+### Key points
+- Uses `docker-compose.yml` + `Dockerfile.dev`
+- `dev.sh` builds (if needed), starts the container in the background, and attaches a bash shell
+- Inside the container your project is mounted at `/workspace`
+- Stop the container: `docker compose -f docker-compose.yml down`
+
+### Windows 10 / WSL notes
+- **Recommended terminal**: WSL terminal (or Windows Terminal + WSL profile)
+- PowerShell and Git Bash work but require more care with paths
+- On Windows hosts, files may have CRLF line endings. `install.sh` now auto-fixes them during build.
+- After editing `Dockerfile.dev`, `install.sh`, or shell files, rebuild with:
+  ```bash
+  docker compose -f docker-compose.yml build --no-cache
+  ```
+
 ## Uninstall
 
 ```bash

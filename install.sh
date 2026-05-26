@@ -3,6 +3,9 @@
 # This script creates symlinks from the home directory to any desired dotfiles in ~/dotfiles
 ############################
 
+# Normalize line endings (critical when repo is on Windows/WSL and copied into Linux container)
+find "$(dirname "${BASH_SOURCE[0]}")" -type f \( -name "*.sh" -o -name "bashrc" -o -name "bash_*" -o -name "vimrc" -o -name "tmux.conf" \) -exec sed -i 's/\r$//' {} + 2>/dev/null || true
+
 # Dependency checks (non-fatal by default)
 check_dependency() {
     local cmd=$1
@@ -38,6 +41,13 @@ echo "...dependency check complete"
 dir=~/dotfiles                    # dotfiles directory
 olddir=~/dotfiles_old             # old dotfiles backup directory
 files="bashrc vimrc vim encrypted_vimrc tmux.conf bash_aliases bash_functions ctags"  # files/folders to symlink in homedir
+
+# Ensure ~/dotfiles symlink exists. This is required inside the Docker dev
+# container (where the repo is copied to /root/dotfiles) so that the sourcing
+# in bashrc can find bash_functions, bash_aliases, etc.
+if [ ! -e "$dir" ]; then
+    ln -s "$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)" "$dir"
+fi
 
 ##########
 
