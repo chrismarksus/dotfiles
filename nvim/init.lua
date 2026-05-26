@@ -135,22 +135,25 @@ require("lazy").setup({
   {
     "nvim-treesitter/nvim-treesitter",
     build = ":TSUpdate",
-    config = function()
-      require("nvim-treesitter.configs").setup({
-        ensure_installed = {
-          "lua", "vim", "vimdoc",
-          "javascript", "typescript", "tsx",
-          "python", "php", "ruby",
-          "json", "yaml", "toml", "markdown",
-          "bash", "dockerfile", "sql"
-        },
-        highlight = { enable = true },
-        indent = { enable = true },
-      })
+    opts = {
+      ensure_installed = {
+        "lua", "vim", "vimdoc",
+        "javascript", "typescript", "tsx",
+        "python", "php", "ruby",
+        "json", "yaml", "toml", "markdown",
+        "bash", "dockerfile", "sql"
+      },
+      highlight = { enable = true },
+      indent = { enable = true },
+    },
+    config = function(_, opts)
+      require("nvim-treesitter.configs").setup(opts)
     end,
   },
 
-  -- LSP Configuration
+  -- LSP Configuration (modern Neovim 0.11+ native style)
+  -- Avoids the deprecated require('lspconfig').xxx.setup() framework.
+  -- See :help lspconfig-nvim-0.11
   {
     "neovim/nvim-lspconfig",
     dependencies = {
@@ -163,24 +166,18 @@ require("lazy").setup({
         ensure_installed = {
           "lua_ls",
           "pyright",
-          "tsserver",
+          "ts_ls",   -- was tsserver (deprecated name)
           "phpactor",
         },
+        automatic_installation = true,
       })
 
-      local lspconfig = require("lspconfig")
-
-      -- Lua
-      lspconfig.lua_ls.setup({})
-
-      -- Python
-      lspconfig.pyright.setup({})
-
-      -- TypeScript / JavaScript
-      lspconfig.tsserver.setup({})
-
-      -- PHP
-      lspconfig.phpactor.setup({})
+      -- Modern native LSP configuration (no more lspconfig "framework")
+      local servers = { "lua_ls", "pyright", "ts_ls", "phpactor" }
+      for _, server in ipairs(servers) do
+        vim.lsp.config(server, {})
+        vim.lsp.enable(server)
+      end
     end,
   },
 })
